@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	  
+	<welcome-file-list>
+      <welcome-file>login.jsp</welcome-file>
+	</welcome-file-list>
+	
+	<!-- 任务监听器 -->
+	<servlet>
+		<servlet-name>taskListener</servlet-name>
+		<servlet-class>com.admin.init.TaskListener</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<!-- 登录身份验证  -->
+	<servlet>
+		<servlet-name>loginValidate</servlet-name>
+		<servlet-class>com.login.controller.LoginController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>loginValidate</servlet-name>
+		<url-pattern>/authentication</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 注销登录 -->
+	<servlet>
+		<servlet-name>loginOut</servlet-name>
+		<servlet-class>com.login.controller.LogoutController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>loginOut</servlet-name>
+		<url-pattern>/logout</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 密码修改验证 -->
+	<servlet>
+		<servlet-name>pwdConfirm</servlet-name>
+		<servlet-class>com.index.controller.PwdConfirmController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>pwdConfirm</servlet-name>
+		<url-pattern>/confirmPwd</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 密码修改保存 -->
+	<servlet>
+		<servlet-name>updatePassword</servlet-name>
+		<servlet-class>com.index.controller.PwdUpdateController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>updatePassword</servlet-name>
+		<url-pattern>/updatePwd</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 系统默认BPF规则设置 -->
+	<servlet>
+		<servlet-name>defaultBPF</servlet-name>
+		<servlet-class>com.admin.bpf.controller.BPFUpdateController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>defaultBPF</servlet-name>
+		<url-pattern>/saveDefaultBPF</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 系统默认BPF规则查看 -->
+	<servlet>
+		<servlet-name>viewDefaultBPF</servlet-name>
+		<servlet-class>com.admin.bpf.controller.BPFViewController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>viewDefaultBPF</servlet-name>
+		<url-pattern>/viewDefBPF</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 任务管理-任务删除  -->
+	<servlet>
+		<servlet-name>deleteTask</servlet-name>
+		<servlet-class>com.task.controller.TaskController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>deleteTask</servlet-name>
+		<url-pattern>/task/delete</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 任务管理-任务状态查看  -->
+	<servlet>
+		<servlet-name>taskStatus</servlet-name>
+		<servlet-class>com.task.controller.TaskStatusController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>taskStatus</servlet-name>
+		<url-pattern>/task/seeDetail</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 任务管理-任务添加  -->
+	<servlet>
+		<servlet-name>taskAdd</servlet-name>
+		<servlet-class>com.task.controller.TaskAddController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>taskAdd</servlet-name>
+		<url-pattern>/task/taskAdd</url-pattern>
+	</servlet-mapping>
+	<!-- 任务添加 BPF存在判断  -->
+	<servlet>
+		<servlet-name>isBPFExist</servlet-name>
+		<servlet-class>com.admin.bpf.controller.BPFSelectCheckController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>isBPFExist</servlet-name>
+		<url-pattern>/isBpfExist</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 中文乱码过滤器  -->
+	<filter>
+		<description>中文乱码过滤器</description>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>com.filter.EncodingFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<!-- 过滤器过的请求：过滤请求到webroot下的所用请求 -->
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- 登录过滤器 -->
+	<filter>
+		<description>登录过滤器</description>
+		<filter-name>loginFilter</filter-name>
+		<filter-class>com.filter.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>loginFilter</filter-name>
+		<!--  请求到pages下的请求都必须进行登录验证    -->
+		<url-pattern>/pages/*</url-pattern>
+	</filter-mapping>
+	
+</web-app>
